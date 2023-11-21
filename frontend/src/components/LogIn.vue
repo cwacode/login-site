@@ -13,7 +13,9 @@
   </div>
   <div>
     <p>Eller skapa konto nedan</p>
-    <button type="submit">Skapa konto</button>
+    <button>
+    <router-link :to="{ name: 'Register' }" >Skapa konto</router-link>
+    </button>
   </div>
 </template>
 

@@ -1,15 +1,15 @@
 <template>
-  <LogIn/>
+<router-view/>
 </template>
 
 
 <script>
-import LogIn from './components/LogIn.vue';
 import { onMounted } from 'vue';
+
 
 export default {
   components: {
-    LogIn
+
   },
   setup() {
     onMounted(() => {
