@@ -16,7 +16,13 @@
       <label for="lastName">Efternamn:</label>
       <input type="text" id="lastName" v-model="user.lastName">
     </div>
-    <button type="submit">Skapa konto</button>
+    
+    <div>
+    <input type="checkbox" id="privacyPolicy" v-model="acceptedPrivacyPolicy">
+    <label for="privacyPolicy">Jag godkänner </label>
+    <router-link to="/privacy-policy">integritetspolicy</router-link>
+  </div>
+  <button type="submit" :disabled="!acceptedPrivacyPolicy">Skapa konto</button>
   </form>
 </template>
 
@@ -29,11 +35,17 @@ export default {
         password: '',
         firstName: '',
         lastName: ''
-      }
+      },
+      acceptedPrivacyPolicy: false,
     };
   },
   methods: {
     async registerUser() {
+        if (this.acceptedPrivacyPolicy) {
+        console.log(this.user);
+      } else {
+        alert('Du måste godkänna integritetspolicyn för att fortsätta.');
+      }
       try {
         const response = await fetch('http://localhost:3000/api/register', {
           method: 'POST',
