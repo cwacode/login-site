@@ -3,7 +3,7 @@ import LogIn from '../components/LogIn.vue';
 import Register from '../components/Register.vue';
 import PrivacyPolicy from '../components/PrivacyPolicy.vue';
 import EditProfile from '../components/EditProfile.vue';
-
+import Welcome from '../components/Welcome.vue'; 
 
 const router = createRouter({
   history: createWebHistory(),
@@ -22,11 +22,16 @@ const router = createRouter({
       path: '/edit-profile',
       name: 'EditProfile',
       component: EditProfile
-      },
+    },
     {
     path: '/privacy-policy',
     name: 'PrivacyPolicy',
     component: PrivacyPolicy
+    },
+    {
+      path: '/welcome',
+      name: 'Welcome',
+      component: Welcome
     },
   ]
 });

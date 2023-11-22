@@ -1,12 +1,16 @@
 <template>
-  <div>
+  <div class="login-container">
     <h2>Logga in</h2>
-    <form @submit.prevent="login">
-      <label for="username">E-post:</label>
-      <input type="text" id="username" v-model="username" />
+    <form @submit.prevent="login" class="login-form">
+      <div class="form-group">
+        <label for="username" class="label">E-post:</label>
+        <input type="text" id="username" v-model="username" class="input" />
+      </div>
 
-      <label for="password">Lösenord:</label>
-      <input type="password" id="password" v-model="password" />
+      <div class="form-group">
+        <label for="password" class="label">Lösenord:</label>
+        <input type="password" id="password" v-model="password" class="input" />
+      </div>
 
       <button type="submit">Logga in</button>
     </form>
@@ -14,7 +18,7 @@
   <div>
     <p>Eller skapa konto nedan</p>
     <button>
-    <router-link :to="{ name: 'Register' }" >Skapa konto</router-link>
+      <router-link :to="{ name: 'Register' }">Skapa konto</router-link>
     </button>
   </div>
 </template>
@@ -28,9 +32,38 @@ export default {
     };
   },
   methods: {
-    login() {
-      console.log('Logging in with:', this.username, this.password);
+    async login() {
+      this.$router.push({ name: 'Welcome' });
     }
   }
 };
 </script>
+
+<style>
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.label {
+  margin-bottom: 5px;
+}
+
+.input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+</style>
