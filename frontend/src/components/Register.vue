@@ -45,6 +45,7 @@ export default {
 
         if (response.ok) {
           console.log('User registered successfully');
+          this.$router.push({ name: 'Welcome' });
         } else {
           console.error('Error registering user');
         }
