@@ -58,6 +58,42 @@ app.delete('/api/delete/:email', async (req, res) => {
   }
 });
 
+app.put('/api/profile/update', async (req, res) => {
+  try {
+    const { firstName, lastName, email, password } = req.body;
+
+    const query = 'UPDATE users SET first_name = $1, last_name = $2, password = $3 WHERE email = $4';
+    const result = await client.query(query, [firstName, lastName, password, email]);
+
+    if (result.rowCount > 0) {
+      res.status(200).json({ message: 'Profile updated successfully' });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.get('/api/profile/:email', async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const query = 'SELECT * FROM users WHERE email = $1';
+    const { rows } = await client.query(query, [email]);
+
+    if (rows.length > 0) {
+      res.status(200).json(rows[0]);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 app.use(express.static(path.join(path.resolve(), 'dist')));
 
 app.listen(3000, () => {
