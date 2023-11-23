@@ -1,9 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LogIn from '../components/LogIn.vue';
-import Register from '../components/Register.vue';
-import PrivacyPolicy from '../components/PrivacyPolicy.vue';
-import EditProfile from '../components/EditProfile.vue';
-import Welcome from '../components/Welcome.vue'; 
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,29 +6,29 @@ const router = createRouter({
     {
       path: '/',
       name: 'LogIn',
-      component: LogIn
+      component: () => import('../components/LogIn.vue')
     },
     {
       path: '/register',
       name: 'Register',
-      component: Register
+      component: () => import('../components/Register.vue')
     },
     {
       path: '/edit-profile',
       name: 'EditProfile',
-      component: EditProfile
+      component: () => import('../components/EditProfile.vue')
     },
     {
-    path: '/privacy-policy',
-    name: 'PrivacyPolicy',
-    component: PrivacyPolicy
+      path: '/privacy-policy',
+      name: 'PrivacyPolicy',
+      component: () => import('../components/PrivacyPolicy.vue')
     },
     {
       path: '/welcome',
       name: 'Welcome',
-      component: Welcome
+      component: () => import('../components/Welcome.vue')
     },
-  ]
+  ],
 });
 
 export default router;
