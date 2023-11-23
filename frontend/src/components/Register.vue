@@ -1,28 +1,28 @@
 <template>
-  <form @submit.prevent="registerUser">
-    <div>
+  <form @submit.prevent="registerUser" class="form-container">
+    <div class="form-group">
       <label for="email">E-post:</label>
-      <input type="email" id="email" v-model="user.email">
+      <input type="email" id="email" v-model="user.email" class="input">
     </div>
-    <div>
+    <div class="form-group">
       <label for="password">Lösenord:</label>
-      <input type="password" id="password" v-model="user.password">
+      <input type="password" id="password" v-model="user.password" class="input">
     </div>
-    <div>
+    <div class="form-group">
       <label for="firstName">Förnamn:</label>
-      <input type="text" id="firstName" v-model="user.firstName">
+      <input type="text" id="firstName" v-model="user.firstName" class="input">
     </div>
-    <div>
+    <div class="form-group">
       <label for="lastName">Efternamn:</label>
-      <input type="text" id="lastName" v-model="user.lastName">
+      <input type="text" id="lastName" v-model="user.lastName" class="input">
     </div>
     
-    <div>
-    <input type="checkbox" id="privacyPolicy" v-model="acceptedPrivacyPolicy">
-    <label for="privacyPolicy">Jag godkänner </label>
-    <router-link to="/privacy-policy">integritetspolicy</router-link>
-  </div>
-  <button type="submit" :disabled="!acceptedPrivacyPolicy">Skapa konto</button>
+    <div class="form-group">
+      <input type="checkbox" id="privacyPolicy" v-model="acceptedPrivacyPolicy" class="checkbox">
+      <label for="privacyPolicy">Jag godkänner </label>
+      <router-link to="/privacy-policy" class="link">integritetspolicy</router-link>
+    </div>
+    <button type="submit" :disabled="!acceptedPrivacyPolicy" class="button">Skapa konto</button>
   </form>
 </template>
 
@@ -69,5 +69,33 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.form-container {
+  max-width: 300px;
+  margin: auto;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.input, .checkbox, .button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.button {
+  color: white;
+  border: none;
+}
+
+.link {
+  color: #007bff;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
 </style>

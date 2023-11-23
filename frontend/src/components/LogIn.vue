@@ -12,12 +12,12 @@
         <input type="password" id="password" v-model="password" class="input" />
       </div>
 
-      <button type="submit">Logga in</button>
+      <button type="submit" class="button">Logga in</button>
     </form>
   </div>
   <div>
     <p>Eller skapa konto nedan</p>
-    <button>
+    <button class="button">
       <router-link :to="{ name: 'Register' }">Skapa konto</router-link>
     </button>
   </div>
@@ -39,31 +39,24 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 300px;
+  margin: auto;
 }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-  max-width: 300px;
-  margin: 0 auto;
+.input, .button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.button {
+  color: white;
+  border: none;
 }
 
 .form-group {
   margin-bottom: 15px;
-}
-
-.label {
-  margin-bottom: 5px;
-}
-
-.input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 </style>
