@@ -1,5 +1,8 @@
 <template>
   <div class="login-container">
+    <div class="image-container">
+      <img src="/login.png" alt="Logga in" class="login-image" loading="lazy" />
+    </div>
     <h2>Logga in</h2>
     <form @submit.prevent="login" class="login-form">
       <div class="form-group">
@@ -43,6 +46,18 @@ export default {
 .login-container {
   max-width: 300px;
   margin: auto;
+  text-align: center;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; 
+}
+
+.login-image {
+  width: 150px; 
+  height: auto; 
 }
 
 .input, .button {
