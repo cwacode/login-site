@@ -1,23 +1,65 @@
 <template>
     <form @submit.prevent="updateUserProfile">
+    
+      <button @click="showUserDetails">Visa mina uppgifter</button>
+      <div v-if="showEmailModal" class="modal">
+  <div class="modal-content">
+    <span class="close" @click="closeEmailModal">&times;</span>
+    <p>Ange din e-postadress:</p>
+    <input type="email" v-model="emailToShowDetails">
+    <button @click="getUserDetails">Visa</button>
+    <div v-if="showUserData && userData">
+      <h3>Användaruppgifter</h3>
       <div>
-        <label for="email">E-post:</label>
-        <input type="email" id="email" v-model="user.email">
+        <p><strong>Förnamn:</strong> {{ userData.first_name }}</p>
+        <p><strong>Efternamn:</strong> {{ userData.last_name }}</p>
+        <p><strong>E-post:</strong> {{ userData.email }}</p>
       </div>
-      <div>
-        <label for="password">Nytt lösenord:</label>
-        <input type="password" id="password" v-model="user.password">
-      </div>
-      <div>
-        <label for="firstName">Förnamn:</label>
-        <input type="text" id="firstName" v-model="user.firstName">
-      </div>
-      <div>
-        <label for="lastName">Efternamn:</label>
-        <input type="text" id="lastName" v-model="user.lastName">
-      </div>
-      <button type="submit">Uppdatera profil</button>
-      <button @click="confirmDeleteProfile">Radera mitt konto</button>
+    </div>
+  </div>
+</div>
+
+    
+<button @click="openEditModal">Uppdatera profil</button>
+
+<div v-if="showEditModal" class="modal">
+    <div class="modal-content">
+      <span class="close" @click="closeEditModal">&times;</span>
+      <h3>Ändra profil</h3>
+      <form @submit.prevent="saveProfileChanges" class="vertical-form">
+        <div class="form-group">
+          <label for="firstName">Förnamn:</label>
+          <input type="text" id="firstName" v-model="profileData.firstName">
+        </div>
+        <div class="form-group">
+          <label for="lastName">Efternamn:</label>
+          <input type="text" id="lastName" v-model="profileData.lastName">
+        </div>
+        <div class="form-group">
+          <label for="email">E-post:</label>
+          <input type="email" id="email" v-model="profileData.email">
+        </div>
+        <div class="form-group">
+          <label for="password">Lösenord:</label>
+          <input type="password" id="password" v-model="profileData.password">
+        </div>
+        <div class="form-group">
+          <button type="submit">Spara ändringar</button>
+          <div v-if="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <div v-if="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+        </div>
+      </form>
+    </div>
+    </div>
+  
+
+
+      <button class="delete" @click="confirmDeleteProfile">Radera mitt konto</button>
 
       <div v-if="showDeleteModal" class="modal">
       <div class="modal-content">
@@ -25,6 +67,13 @@
         <p>Ange din e-postadress:</p>
         <input type="email" v-model="emailToDelete">
         <button @click="deleteProfile">Bekräfta</button>
+        <div v-if="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <div v-if="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
       </div>
     </div>
     </form>
@@ -34,15 +83,22 @@
   export default {
     data() {
       return {
-        user: {
-          email: '',
-          password: '',
-          firstName: '',
-          lastName: '',
-        },
         showDeleteModal: false,
-        emailToDelete: '',
-      };
+      emailToDelete: '',
+      errorMessage: '',
+      successMessage: '',
+      showEditModal: false,
+      profileData: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+      },
+      showEmailModal: false,
+      emailToShowDetails: '',
+      userData: null,
+      showUserData: false,
+    };
     },
     methods: {
       confirmDeleteProfile() {
@@ -52,6 +108,87 @@
        this.showDeleteModal = false;
        this.emailToDelete = '';
     },
+
+    showUserDetails() {
+      this.showEmailModal = true;
+    },
+
+    closeEmailModal() {
+      this.showEmailModal = false;
+      this.emailToShowDetails = '';
+    },
+
+    getUserDetails() {
+  fetch(`http://localhost:3000/api/profile/${this.emailToShowDetails}`)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Failed to fetch user details');
+      }
+    })
+    .then(userData => {
+      this.userData = userData;
+      this.showUserData = true; 
+
+      setTimeout(() => {
+        this.showEmailModal = false;
+        this.emailToShowDetails = '';
+        this.userData = null;
+      }, 4000); 
+    })
+    .catch(error => {
+      console.error('Error fetching user details:', error);
+    });
+},
+
+saveProfileChanges() {
+  fetch('http://localhost:3000/api/profile/update', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      firstName: this.profileData.firstName,
+      lastName: this.profileData.lastName,
+      email: this.profileData.email,
+      password: this.profileData.password,
+    }),
+  })
+  .then(response => {
+    if (response.ok) {
+      this.successMessage = 'Profilen är nu ändrad'; 
+          setTimeout(() => {
+            this.showEditModal = false;
+            this.successMessage = '';
+          }, 4000); 
+    } else {
+      this.errorMessage = 'Profilen finns inte';
+            setTimeout(() => {
+              this.showEditModal = false;
+              this.errorMessage = ''; 
+            }, 4000); 
+    }
+  })
+  .catch(error => {
+    console.error('Error updating profile:', error);
+  });
+},
+    closeEditModal() {
+      this.showEditModal = false;
+    },
+    showUserDetails() {
+      this.showEmailModal = true;
+    },
+
+    closeEmailModal() {
+      this.showEmailModal = false;
+      this.emailToShowDetails = '';
+    },
+    openEditModal() {
+      this.showEditModal = true;
+    },
+
     deleteProfile() {
       if (this.emailToDelete.trim() === '') {
         return;
@@ -81,6 +218,7 @@
         .catch(error => {
           console.error('Error:', error);
         });
+        
       }
   },
   };
@@ -99,6 +237,7 @@ input[type="email"], input[type="password"], input[type="text"], button {
 }
 
 button {
+  background-color: #007bff;
   color: white;
   border: none;
 }
@@ -107,7 +246,7 @@ button {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,6 +255,12 @@ button {
 .modal-content {
   padding: 20px;
   border-radius: 5px;
+}
+
+.delete {
+  background-color: red;
+  color: white;
+  border: none;
 }
 </style>
 

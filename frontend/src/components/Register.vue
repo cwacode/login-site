@@ -86,6 +86,7 @@ export default {
 }
 
 .button {
+  background-color: #007bff;
   color: white;
   border: none;
 }

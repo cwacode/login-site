@@ -52,7 +52,7 @@ export default {
 }
 
 .button {
-  color: white;
+  color: blue;
   border: none;
 }
 
