@@ -119,7 +119,7 @@
     },
 
     getUserDetails() {
-  fetch(`http://localhost:3000/api/profile/${this.emailToShowDetails}`)
+  fetch(`https://loginab.onrender.com/api/profile/${this.emailToShowDetails}`)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -143,7 +143,7 @@
 },
 
 saveProfileChanges() {
-  fetch('http://localhost:3000/api/profile/update', {
+  fetch('https://loginab.onrender.com/api/profile/update', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -193,7 +193,7 @@ saveProfileChanges() {
       if (this.emailToDelete.trim() === '') {
         return;
       }
-      fetch(`http://localhost:3000/api/delete/${this.emailToDelete}`, {
+      fetch(`https://loginab.onrender.com/api/delete/${this.emailToDelete}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
