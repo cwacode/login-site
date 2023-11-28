@@ -15,6 +15,8 @@
         <input type="password" id="password" v-model="password" class="input" />
       </div>
 
+      <div v-if="error" class="error-message">{{ error }}</div>
+
       <button type="submit" class="button">Logga in</button>
     </form>
   </div>
@@ -31,12 +33,32 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      error: ''
     };
   },
   methods: {
     async login() {
-      this.$router.push({ name: 'Welcome' });
+      try {
+        const response = await fetch('https://loginab.onrender.com/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: this.username,
+            password: this.password
+          })
+        });
+
+        if (response.ok) {
+          this.$router.push({ name: 'Welcome' }); 
+        } else {
+          throw new Error('Logga in misslyckades');
+        }
+      } catch (error) {
+        this.error = 'Fel e-post eller lösenord'; 
+      }
     }
   }
 };
@@ -73,5 +95,10 @@ export default {
 
 .form-group {
   margin-bottom: 15px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 5px;
 }
 </style>

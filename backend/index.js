@@ -26,6 +26,28 @@ app.get('/api', async (_request, response) => {
   }
 });
 
+app.post('/api/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const query = 'SELECT * FROM users WHERE email = $1';
+    const { rows } = await client.query(query, [email]);
+
+    if (rows.length === 1) {
+      if (rows[0].password === password) {
+        res.status(200).json({ message: 'Login successful' });
+      } else {
+        res.status(401).json({ message: 'Invalid email or password' });
+      }
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 app.post('/api/register', async (req, res) => {
   try {
     const { email, password, firstName, lastName } = req.body;
