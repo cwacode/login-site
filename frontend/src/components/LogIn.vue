@@ -17,6 +17,10 @@
 
       <div v-if="error" class="error-message">{{ error }}</div>
 
+      <label>
+        <input type="checkbox" v-model="rememberMe"> Kom ihåg mig
+      </label>
+
       <button type="submit" class="button">Logga in</button>
     </form>
   </div>
@@ -34,8 +38,15 @@ export default {
     return {
       username: '',
       password: '',
-      error: ''
+      error: '',
+      rememberMe: false
     };
+  },
+  mounted() {
+    const cachedEmail = localStorage.getItem('cachedEmail');
+    if (cachedEmail && this.rememberMe) {
+      this.username = cachedEmail;
+    }
   },
   methods: {
     async login() {
@@ -52,17 +63,23 @@ export default {
         });
 
         if (response.ok) {
+          if (this.rememberMe) {
+            localStorage.setItem('cachedEmail', this.username);
+          } else {
+            localStorage.removeItem('cachedEmail'); 
+          }
           this.$router.push({ name: 'Welcome' }); 
         } else {
           throw new Error('Logga in misslyckades');
         }
       } catch (error) {
-        this.error = 'Fel e-post eller lösenord'; 
+        this.error = 'Fel e-post eller lösenord';
       }
     }
   }
 };
 </script>
+
 
 <style scoped>
 .login-container {
