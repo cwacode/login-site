@@ -1,25 +1,20 @@
 <template>
-    <form @submit.prevent="updateUserProfile">
+<form @submit.prevent="updateUserProfile">
     
-      <button @click="showUserDetails">Visa mina uppgifter</button>
-      <div v-if="showEmailModal" class="modal">
+<button @click="showUserDetails" class="button">Visa mina uppgifter</button>
+
+<div v-if="showUserData && userData" class="modal">
   <div class="modal-content">
-    <span class="close" @click="closeEmailModal">&times;</span>
-    <p>Ange din e-postadress:</p>
-    <input type="email" v-model="emailToShowDetails">
-    <button @click="getUserDetails">Visa</button>
-    <div v-if="showUserData && userData">
-      <h3>Användaruppgifter</h3>
-      <div>
-        <p><strong>Förnamn:</strong> {{ userData.first_name }}</p>
-        <p><strong>Efternamn:</strong> {{ userData.last_name }}</p>
-        <p><strong>E-post:</strong> {{ userData.email }}</p>
-      </div>
+    <span class="close" @click="closeUserDataModal">&times;</span>
+    <h3>Användaruppgifter</h3>
+    <div>
+      <p><strong>Förnamn:</strong> {{ userData.first_name }}</p>
+      <p><strong>Efternamn:</strong> {{ userData.last_name }}</p>
+      <p><strong>E-post:</strong> {{ userData.email }}</p>
     </div>
   </div>
 </div>
 
-    
 <button @click="openEditModal">Uppdatera profil</button>
 
 <div v-if="showEditModal" class="modal">
@@ -56,9 +51,6 @@
       </form>
     </div>
     </div>
-  
-
-
       <button class="delete" @click="confirmDeleteProfile">Radera mitt konto</button>
 
       <div v-if="showDeleteModal" class="modal">
@@ -94,12 +86,12 @@
         email: '',
         password: ''
       },
-      showEmailModal: false,
-      emailToShowDetails: '',
       userData: null,
       showUserData: false,
+      emailToShowDetails: '',
     };
     },
+
     methods: {
       confirmDeleteProfile() {
        this.showDeleteModal = true;
@@ -110,37 +102,31 @@
     },
 
     showUserDetails() {
-      this.showEmailModal = true;
-    },
+      const cachedEmail = localStorage.getItem('cachedEmail');
+      if (cachedEmail) {
+        this.emailToShowDetails = cachedEmail;
+        fetch(`https://loginab.onrender.com/api/profile/${this.emailToShowDetails}`)
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('Failed to fetch user details');
+            }
+          })
+          .then(userData => {
+            this.userData = userData;
+            this.showUserData = true;
 
-    closeEmailModal() {
-      this.showEmailModal = false;
-      this.emailToShowDetails = '';
-    },
-
-    getUserDetails() {
-  fetch(`https://loginab.onrender.com/api/profile/${this.emailToShowDetails}`)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Failed to fetch user details');
+          })
+          .catch(error => {
+            console.error('Error fetching user details:', error);
+          });
       }
-    })
-    .then(userData => {
-      this.userData = userData;
-      this.showUserData = true; 
+    },
 
-      setTimeout(() => {
-        this.showEmailModal = false;
-        this.emailToShowDetails = '';
-        this.userData = null;
-      }, 4000); 
-    })
-    .catch(error => {
-      console.error('Error fetching user details:', error);
-    });
-},
+    closeUserDataModal() {
+      this.showUserData = false;
+    },
 
 saveProfileChanges() {
   fetch('https://loginab.onrender.com/api/profile/update', {
@@ -176,9 +162,6 @@ saveProfileChanges() {
 },
     closeEditModal() {
       this.showEditModal = false;
-    },
-    showUserDetails() {
-      this.showEmailModal = true;
     },
 
     closeEmailModal() {

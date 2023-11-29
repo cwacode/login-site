@@ -73,7 +73,10 @@ export default {
           throw new Error('Logga in misslyckades');
         }
       } catch (error) {
-        this.error = 'Fel e-post eller lösenord';
+          this.error = 'Fel e-post eller lösenord';
+          setTimeout(() => {
+            this.error = '';
+          }, 2000); 
       }
     }
   }
