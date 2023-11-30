@@ -50,24 +50,26 @@
         </div>
       </form>
     </div>
-    </div>
-      <button class="delete" @click="confirmDeleteProfile">Radera mitt konto</button>
+  </div>
 
-      <div v-if="showDeleteModal" class="modal">
-      <div class="modal-content">
-        <span class="close" @click="closeModal">&times;</span>
-        <p>Ange din e-postadress:</p>
-        <input type="email" v-model="emailToDelete">
-        <button @click="deleteProfile">Bekräfta</button>
-        <div v-if="successMessage" class="success-message">
-      {{ successMessage }}
+  <button class="delete" @click="showDeleteConfirmation">Radera mitt konto</button>
+
+  <div v-if="showDeleteModal" class="modal">
+    <div class="modal-content">
+      <span class="close" @click="closeModal">&times;</span>
+      <h3>Radera konto</h3>
+      <p>Är du säker på att vill radera ditt konto?</p>
+      <div>
+        <button @click="confirmDeleteProfile">Ja</button>
+        <button @click="closeModal" class="red-button">Nej</button>
+      </div>
     </div>
+  </div>
 
     <div v-if="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
-      </div>
-    </div>
+
     </form>
   </template>
   
@@ -75,8 +77,6 @@
   export default {
     data() {
       return {
-        showDeleteModal: false,
-      emailToDelete: '',
       errorMessage: '',
       successMessage: '',
       showEditModal: false,
@@ -89,17 +89,11 @@
       userData: null,
       showUserData: false,
       emailToShowDetails: '',
+      showDeleteModal: false,
     };
     },
 
     methods: {
-      confirmDeleteProfile() {
-       this.showDeleteModal = true;
-    },
-      closeModal() {
-       this.showDeleteModal = false;
-       this.emailToDelete = '';
-    },
 
     showUserDetails() {
       const cachedEmail = localStorage.getItem('cachedEmail');
@@ -164,45 +158,46 @@ saveProfileChanges() {
       this.showEditModal = false;
     },
 
-    closeEmailModal() {
-      this.showEmailModal = false;
-      this.emailToShowDetails = '';
-    },
     openEditModal() {
       this.showEditModal = true;
     },
 
-    deleteProfile() {
-      if (this.emailToDelete.trim() === '') {
-        return;
-      }
-      fetch(`https://loginab.onrender.com/api/delete/${this.emailToDelete}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => {
-          if (response.ok) {
-            this.successMessage = 'Profilen är nu raderad'; 
-            setTimeout(() => {
-              this.successMessage = ''; 
-              this.closeModal(); 
-            }, 1000);
-          }else if (response.status === 404) {
-            this.errorMessage = 'Profilen finns inte';
-            setTimeout(() => {
-              this.errorMessage = ''; 
-            }, 1000); 
-          } else {
-            console.error('Error deleting profile:', response.status);
-          }
+    showDeleteConfirmation() {
+      this.showDeleteModal = true;
+    },
+
+    confirmDeleteProfile() {
+      console.log("confirmDeleteProfile method is triggered");
+      const cachedEmail = localStorage.getItem('cachedEmail');
+      if (cachedEmail) {
+        this.emailToShowDetails = cachedEmail;
+        fetch(`https://loginab.onrender.com/api/delete/${this.emailToShowDetails}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-        
+          .then(response => {
+            if (response.ok) {
+              this.$router.push({ name: 'LogIn' });
+            } else if (response.status === 404) {
+              this.errorMessage = 'Profilen finns inte';
+            } else {
+              console.error('Error deleting profile:', response.status);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      } else {
+        console.error('Cached email not found');
       }
+    },
+
+    closeModal() {
+      this.showDeleteModal = false;
+    },
+
   },
   };
   </script>
@@ -245,6 +240,31 @@ button {
   color: white;
   border: none;
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+.red-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
 </style>
 
   
