@@ -1,10 +1,12 @@
 <template>
   <div>
     <h2>Välkommen!</h2>
-    
+    <div class="image-container">
+      <img src="/welcome.png" alt="Logga in" class="welcome-image" loading="lazy" />
+    </div>
     <div class="vertical-buttons">
-  <button @click="goToMyProfile">Min profil</button>
-  <button @click="logout">Logga ut</button>
+  <p><button type="submit" class="button" @click="goToMyProfile">Min profil</button></p>
+  <p><button type="submit" class="button" @click="logout">Logga ut</button></p>
 </div>
 </div>
 </template>
@@ -83,10 +85,21 @@ input[type="password"] {
 }
 
 button {
-  padding: 8px;
+  background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 2px;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; 
+}
+
+.welcome-image {
+  width: 150px; 
+  height: auto; 
 }
 
 </style>

@@ -1,5 +1,14 @@
 <template>
 <form @submit.prevent="updateUserProfile">
+
+  <div class="image-container">
+      <img src="/cone.png" alt="Logga in" class="welcome-image" loading="lazy" />
+    </div>
+
+  <div @click="goBack" class="login-image-container">
+      <img src="/back.png" alt="Tillbaka" class="login-image" loading="lazy" />
+    </div>
+
     
 <button @click="showUserDetails" class="button">Visa mina uppgifter</button>
 
@@ -165,6 +174,9 @@ saveProfileChanges() {
     showDeleteConfirmation() {
       this.showDeleteModal = true;
     },
+    goBack() {
+      this.$router.push({ name: 'Welcome' }); 
+    },
 
     confirmDeleteProfile() {
       console.log("confirmDeleteProfile method is triggered");
@@ -265,6 +277,27 @@ button {
   border-radius: 4px;
 }
 
-</style>
+.login-image-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+}
 
-  
+.login-image {
+  max-width: 60px; 
+  height: auto;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px; 
+}
+
+.welcome-image {
+  width: 150px; 
+  height: auto; 
+}
+
+</style>

@@ -26,8 +26,8 @@
   </div>
   <div>
     <p>Eller skapa konto nedan</p>
-    <button class="button">
-      <router-link :to="{ name: 'Register' }">Skapa konto</router-link>
+    <button class="button" type="submit">
+      <router-link :to="{ name: 'Register' }" class="button">Skapa konto</router-link>
     </button>
   </div>
 </template>
@@ -109,7 +109,8 @@ export default {
 }
 
 .button {
-  color: blue;
+  background-color: #007bff;
+  color: white;
   border: none;
 }
 
