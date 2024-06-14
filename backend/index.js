@@ -6,12 +6,18 @@ const dotenv = require('dotenv');
 const { Client } = require('pg');
 
 dotenv.config();
-
+const connectionString = process.env.PGURI;
 const client = new Client({
-  connectionString: process.env.PGURI,
+  connectionString,
+  ssl: {
+    rejectUnauthorized: false // For self-signed certificates; set to true in production for valid certificates
+  }
 });
 
-client.connect();
+
+client.connect()
+  .then(() => console.log('Connected successfully to PostgreSQL database'))
+  .catch(e => console.error('Failed to connect to PostgreSQL database', e));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
