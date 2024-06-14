@@ -47,11 +47,12 @@ export default {
         alert('Du måste godkänna integritetspolicyn för att fortsätta.');
       }
       try {
-        const response = await fetch('https://loginab.onrender.com/api/register', {
+        const response = await fetch('https://login-site-14vx.onrender.com/api/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include',
           body: JSON.stringify(this.user),
         });
 

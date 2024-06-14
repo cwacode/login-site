@@ -108,7 +108,7 @@
       const cachedEmail = localStorage.getItem('cachedEmail');
       if (cachedEmail) {
         this.emailToShowDetails = cachedEmail;
-        fetch(`https://loginab.onrender.com/api/profile/${this.emailToShowDetails}`)
+        fetch(`https://login-site-14vx.onrender.com/api/profile/${this.emailToShowDetails}`)
           .then(response => {
             if (response.ok) {
               return response.json();
@@ -132,7 +132,7 @@
     },
 
 saveProfileChanges() {
-  fetch('https://loginab.onrender.com/api/profile/update', {
+  fetch('https://login-site-14vx.onrender.com/api/profile/update', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -183,7 +183,7 @@ saveProfileChanges() {
       const cachedEmail = localStorage.getItem('cachedEmail');
       if (cachedEmail) {
         this.emailToShowDetails = cachedEmail;
-        fetch(`https://loginab.onrender.com/api/delete/${this.emailToShowDetails}`, {
+        fetch(`https://login-site-14vx.onrender.com/api/delete/${this.emailToShowDetails}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

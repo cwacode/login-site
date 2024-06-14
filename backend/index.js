@@ -1,26 +1,30 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
+import express from 'express';
+import cors from 'cors';
+import client from './database.js';
+
 const app = express();
-const dotenv = require('dotenv');
-const { Client } = require('pg');
 
-dotenv.config();
-const connectionString = process.env.PGURI;
-const client = new Client({
-  connectionString,
-  ssl: {
-    rejectUnauthorized: false
-  }
+const allowedOrigins = ['http://localhost:5173', 'https://login-site-14vx.onrender.com']
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps, curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH']
+}));
+app.use(express.json());
+app.use(express.static('dist')); 
+
+app.listen(3000, () => {
+  console.log('Server running at http://localhost:3000/');
 });
-
-
-client.connect()
-  .then(() => console.log('Connected successfully to PostgreSQL database'))
-  .catch(e => console.error('Failed to connect to PostgreSQL database', e));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/api', async (_request, response) => {
   try {
@@ -188,8 +192,3 @@ app.delete('/api/projects/:id', async (req, res) => {
 });
 
 
-app.use(express.static(path.join(path.resolve(), 'dist')));
-
-app.listen(3000, () => {
-  console.log('Server running at http://localhost:3000/');
-});
