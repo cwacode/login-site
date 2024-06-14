@@ -10,7 +10,7 @@
     </div>
 
     
-<button @click="showUserDetails" class="button">Visa mina uppgifter</button>
+<button @click="showUserDetails" class="button blue">Visa mina uppgifter</button>
 
 <div v-if="showUserData && userData" class="modal">
   <div class="modal-content">
@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<button @click="openEditModal">Uppdatera profil</button>
+<button @click="openEditModal" class="button blue">Uppdatera profil</button>
 
 <div v-if="showEditModal" class="modal">
     <div class="modal-content">
@@ -48,7 +48,7 @@
           <input type="password" id="password" v-model="profileData.password">
         </div>
         <div class="form-group">
-          <button type="submit">Spara ändringar</button>
+          <button class="button blue" type="submit">Spara ändringar</button>
           <div v-if="successMessage" class="success-message">
       {{ successMessage }}
     </div>
@@ -61,7 +61,7 @@
     </div>
   </div>
 
-  <button class="delete" @click="showDeleteConfirmation">Radera mitt konto</button>
+  <button class="button red" @click="showDeleteConfirmation">Radera mitt konto</button>
 
   <div v-if="showDeleteModal" class="modal">
     <div class="modal-content">
@@ -69,8 +69,8 @@
       <h3>Radera konto</h3>
       <p>Är du säker på att vill radera ditt konto?</p>
       <div>
-        <button @click="confirmDeleteProfile">Ja</button>
-        <button @click="closeModal" class="red-button">Nej</button>
+        <button @click="confirmDeleteProfile" class="button red">Ja</button>
+        <button @click="closeModal" class="button blue">Nej</button>
       </div>
     </div>
   </div>
@@ -226,12 +226,6 @@ input[type="email"], input[type="password"], input[type="text"], button {
   padding: 8px;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-}
-
 .modal {
   position: fixed;
   top: 0; left: 0;
@@ -247,12 +241,6 @@ button {
   border-radius: 5px;
 }
 
-.delete {
-  background-color: red;
-  color: white;
-  border: none;
-}
-
 .modal {
   position: fixed;
   top: 0;
@@ -264,17 +252,30 @@ button {
   justify-content: center;
   align-items: center;
 }
+
 .modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 5px;
 }
-.red-button {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+
+  .button {
+    flex: 1;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+  }
+  .blue {
+    background-color: #007bff;
+  }
+  .red {
+    background-color: #ff4b4b;
+    color: white;
 }
 
 .login-image-container {

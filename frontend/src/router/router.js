@@ -28,6 +28,11 @@ const router = createRouter({
       name: 'Welcome',
       component: () => import('../components/Welcome.vue')
     },
+    {
+      path: '/project-manager',
+      name: 'ProjectManager',
+      component: () => import('../components/ProjectManager.vue')
+    },    
   ],
 });
 

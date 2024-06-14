@@ -1,105 +1,57 @@
 <template>
   <div>
-    <h2>Välkommen!</h2>
+    <h1>Välkommen!</h1>
     <div class="image-container">
       <img src="/welcome.png" alt="Logga in" class="welcome-image" loading="lazy" />
     </div>
-    <div class="vertical-buttons">
-  <p><button type="submit" class="button" @click="goToMyProfile">Min profil</button></p>
-  <p><button type="submit" class="button" @click="logout">Logga ut</button></p>
-</div>
-</div>
+      <router-link to="/edit-profile" tag="button" class="button blue">Min profil</router-link>
+      <router-link to="/project-manager" tag="button" class="button blue">Projekt Hantering</router-link>
+      <router-link to="/" tag="button" class="button red">Logga ut</router-link>
+  </div>
 </template>
+
 
 <script>
 export default {
-  data() {
-    return {
-      showDeleteModal: false,
-      emailToDelete: '',
-      errorMessage: '',
-      successMessage: '',
-      showEditModal: false,
-      profileData: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: ''
-      },
-      showEmailModal: false,
-      emailToShowDetails: '',
-      userData: null,
-      showUserData: false,
-    };
-  },
-  methods: {
-    
-    goToMyProfile() {
-      this.$router.push({ name: 'EditProfile' });
-      
-    },
-    logout() {
-      this.$router.push({ name: 'LogIn' });
-    },
-
-  }
 };
 </script>
 
 <style>
-.vertical-buttons {
+.button-container {
   display: flex;
   flex-direction: column;
-}
-.close { 
-  cursor: pointer; 
-}
-.success-message {
-  color: green;
-  margin-top: 10px;
-}
-.error-message {
-  color: red;
-  margin-top: 10px;
-}
-.vertical-form {
-  display: flex;
-  flex-direction: column;
+  align-items: center;
 }
 
-.form-group {
-  margin-bottom: 10px;
+.button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+  display: block;
 }
 
-label {
-  margin-bottom: 5px;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
+.blue {
   background-color: #007bff;
   color: white;
-  border: none;
-  border-radius: 2px;
+}
+
+.red {
+  background-color: #ff4b4b;
+  color: white;
 }
 
 .image-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .welcome-image {
-  width: 150px; 
-  height: auto; 
+  width: 150px;
+  height: auto;
 }
-
 </style>

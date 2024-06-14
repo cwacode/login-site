@@ -146,6 +146,7 @@ app.post('/api/projects', async (req, res) => {
           [title, description, status]
       );
       res.status(201).json(result.rows[0]);
+      console.log(result.rows[0])
   } catch (error) {
       console.error('Error:', error);
       res.status(500).json({ message: 'Server error' });
@@ -163,6 +164,7 @@ app.put('/api/projects/:id', async (req, res) => {
       );
       if (result.rows.length) {
           res.json(result.rows[0]);
+          console.log(result.rows[0])
       } else {
           res.status(404).json({ message: 'Project not found' });
       }
@@ -182,6 +184,7 @@ app.delete('/api/projects/:id', async (req, res) => {
       );
       if (result.rows.length) {
           res.json({ message: 'Project deleted successfully' });
+          console.log({ message: 'Project deleted successfully' })
       } else {
           res.status(404).json({ message: 'Project not found' });
       }
