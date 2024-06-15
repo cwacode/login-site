@@ -106,7 +106,7 @@ export default {
       return new Promise((resolve, reject) => {
         const cachedEmail = localStorage.getItem('cachedEmail');
         if (cachedEmail) {
-          fetch(`https://login-site-14vx.onrender.com/api/profile/${cachedEmail}`)
+          fetch(`https://login-site-14vx.onrender.com/api/user/profile/${cachedEmail}`)
             .then(response => {
               if (!response.ok) {
                 throw new Error('Failed to fetch user details');
@@ -135,7 +135,7 @@ export default {
     },
 
     saveProfileChanges() {
-      fetch('https://login-site-14vx.onrender.com/api/profile/update', {
+      fetch('https://login-site-14vx.onrender.com/api/user/profile/update', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export default {
       const cachedEmail = localStorage.getItem('cachedEmail');
       if (cachedEmail) {
         this.emailToShowDetails = cachedEmail;
-        fetch(`https://login-site-14vx.onrender.com/api/delete/${this.emailToShowDetails}`, {
+        fetch(`https://login-site-14vx.onrender.com/api/user/delete/${this.emailToShowDetails}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

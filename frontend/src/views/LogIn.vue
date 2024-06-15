@@ -22,7 +22,9 @@
   </div>
   <div>
     <p>Eller skapa konto nedan</p>
-      <router-link :to="{ name: 'Register' }" class="button">Skapa konto</router-link>
+      <router-link :to="{ name: 'Register' }" class="button">
+        <button type="submit" class="button">Skapa konto</button>
+      </router-link>
   </div>
 </template>
 
@@ -44,7 +46,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await fetch('https://login-site-14vx.onrender.com/api/login', {
+        const response = await fetch('https://login-site-14vx.onrender.com/api/user/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

@@ -24,6 +24,9 @@
     </div>
     <button type="submit" :disabled="!acceptedPrivacyPolicy" class="button">Skapa konto</button>
   </form>
+  <router-link :to="{ name: 'LogIn' }">
+            <button type="submit" class="button">Tillbaka</button>
+      </router-link>
 </template>
 
 <script>
@@ -46,7 +49,7 @@ export default {
         alert('Du måste godkänna integritetspolicyn för att fortsätta.');
       }
       try {
-        const response = await fetch('https://login-site-14vx.onrender.com/api/register', {
+        const response = await fetch('https://login-site-14vx.onrender.com/api/user/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

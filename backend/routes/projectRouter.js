@@ -3,7 +3,7 @@ import client from '../database.js'
 
 const router = express.Router();
 
-router.get('/api/projects', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const { rows } = await client.query('SELECT * FROM projects');
         res.json(rows);
@@ -13,7 +13,7 @@ router.get('/api/projects', async (req, res) => {
     }
   });
   
-  router.post('/api/projects', async (req, res) => {
+  router.post('/', async (req, res) => {
     const { title, description, status } = req.body;
     try {
         const result = await client.query(
@@ -28,7 +28,7 @@ router.get('/api/projects', async (req, res) => {
     }
   });
   
-  router.put('/api/projects/:id', async (req, res) => {
+  router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { title, description, status } = req.body;
     try {
@@ -48,7 +48,7 @@ router.get('/api/projects', async (req, res) => {
     }
   });
   
-  router.delete('/api/projects/:id', async (req, res) => {
+  router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const result = await client.query(

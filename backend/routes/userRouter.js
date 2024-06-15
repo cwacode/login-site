@@ -4,7 +4,7 @@ import client from '../database.js'
 const router = express.Router();
 
 
-router.get('/api', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       const { rows } = await client.query('SELECT * FROM users');
       res.send(rows);
@@ -14,7 +14,8 @@ router.get('/api', async (req, res) => {
     }
   });
   
-  router.post('/api/login', async (req, res) => {
+  router.post('/login', async (req, res) => {
+    console.log("Received login request with body:", req.body);
     try {
       const { email, password } = req.body;
   
@@ -36,7 +37,7 @@ router.get('/api', async (req, res) => {
     }
   });
   
-  router.post('/api/register', async (req, res) => {
+  router.post('/register', async (req, res) => {
     try {
       const { email, password, firstName, lastName } = req.body;
   
@@ -50,7 +51,7 @@ router.get('/api', async (req, res) => {
     }
   });
   
-  router.delete('/api/delete/:email', async (req, res) => {
+  router.delete('/delete/:email', async (req, res) => {
     try {
       const { email } = req.params;
   
@@ -68,7 +69,7 @@ router.get('/api', async (req, res) => {
     }
   });
   
-  router.put('/api/profile/update', async (req, res) => {
+  router.put('/profile/update', async (req, res) => {
     try {
       const { firstName, lastName, email, password } = req.body;
   
@@ -86,7 +87,7 @@ router.get('/api', async (req, res) => {
     }
   });
   
-  router.get('/api/profile/:email', async (req, res) => {
+  router.get('/profile/:email', async (req, res) => {
     try {
       const { email } = req.params;
   
