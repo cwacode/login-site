@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     fetchProjects() {
-      fetch('https://login-site-14vx.onrender.com/api/projects')
+      fetch('https://login-site-14vx.onrender.com/api/project')
         .then(response => response.json())
         .then(data => {
           this.projects = data;
