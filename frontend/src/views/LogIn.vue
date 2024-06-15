@@ -17,18 +17,12 @@
 
       <div v-if="error" class="error-message">{{ error }}</div>
 
-      <label>
-        <input type="checkbox" v-model="rememberMe"> Kom ihåg mig
-      </label>
-
       <button type="submit" class="button">Logga in</button>
     </form>
   </div>
   <div>
     <p>Eller skapa konto nedan</p>
-    <button class="button" type="submit">
       <router-link :to="{ name: 'Register' }" class="button">Skapa konto</router-link>
-    </button>
   </div>
 </template>
 
@@ -39,12 +33,11 @@ export default {
       username: '',
       password: '',
       error: '',
-      rememberMe: false
     };
   },
   mounted() {
     const cachedEmail = localStorage.getItem('cachedEmail');
-    if (cachedEmail && this.rememberMe) {
+    if (cachedEmail) {
       this.username = cachedEmail;
     }
   },
@@ -63,22 +56,20 @@ export default {
         });
 
         if (response.ok) {
-          if (this.rememberMe) {
             localStorage.setItem('cachedEmail', this.username);
+            this.$router.push({ name: 'Welcome' }); 
           } else {
             localStorage.removeItem('cachedEmail'); 
+            throw new Error('Logga in misslyckades');
           }
-          this.$router.push({ name: 'Welcome' }); 
-        } else {
-          throw new Error('Logga in misslyckades');
         }
-      } catch (error) {
+       catch (error) {
           this.error = 'Fel e-post eller lösenord';
           setTimeout(() => {
             this.error = '';
           }, 2000); 
       }
-    }
+    },
   }
 };
 </script>
@@ -88,7 +79,6 @@ export default {
 .login-container {
   max-width: 300px;
   margin: auto;
-  text-align: center;
 }
 
 .image-container {
@@ -102,8 +92,8 @@ export default {
   height: auto; 
 }
 
-.input, .button {
-  width: 100%;
+.input {
+  width: 90%;
   margin-bottom: 10px;
   padding: 8px;
 }
@@ -112,8 +102,12 @@ export default {
   background-color: #007bff;
   color: white;
   border: none;
+  margin: 0;
+  width: 100%;
 }
-
+a {
+  max-width: 78%;
+}
 .form-group {
   margin-bottom: 15px;
 }

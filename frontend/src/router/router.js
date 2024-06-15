@@ -6,32 +6,32 @@ const router = createRouter({
     {
       path: '/',
       name: 'LogIn',
-      component: () => import('../components/LogIn.vue')
+      component: () => import('../views/LogIn.vue')
     },
     {
       path: '/register',
       name: 'Register',
-      component: () => import('../components/Register.vue')
+      component: () => import('../views/Register.vue')
     },
     {
-      path: '/edit-profile',
-      name: 'EditProfile',
-      component: () => import('../components/EditProfile.vue')
+      path: '/profile',
+      name: 'Profile',
+      component: () => import('../views/Profile.vue')
     },
     {
       path: '/privacy-policy',
       name: 'PrivacyPolicy',
-      component: () => import('../components/PrivacyPolicy.vue')
+      component: () => import('../views/PrivacyPolicy.vue')
     },
     {
       path: '/welcome',
       name: 'Welcome',
-      component: () => import('../components/Welcome.vue')
+      component: () => import('../views/Welcome.vue')
     },
     {
       path: '/project-manager',
       name: 'ProjectManager',
-      component: () => import('../components/ProjectManager.vue')
+      component: () => import('../views/ProjectManager.vue')
     },    
   ],
 });

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import ProjectForm from './ProjectForm.vue'; // Make sure to create this component
+import ProjectForm from '../components/ProjectForm.vue'; // Make sure to create this component
 
 export default {
   name: 'ProjectManager',
