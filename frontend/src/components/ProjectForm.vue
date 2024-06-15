@@ -107,8 +107,9 @@
   
   .button-group {
     display: flex;
-    justify-content: space-between;/
+    justify-content: space-between;
   }
+  
   .button {
     flex: 1;
     margin: 0 5px;
@@ -121,9 +122,11 @@
     color: white;
     text-align: center;
   }
+  
   .blue {
     background-color: #007bff;
   }
+  
   .red {
     background-color: #ff4b4b;
     color: white;

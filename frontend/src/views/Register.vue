@@ -42,7 +42,6 @@ export default {
   methods: {
     async registerUser() {
         if (this.acceptedPrivacyPolicy) {
-        console.log(this.user);
       } else {
         alert('Du måste godkänna integritetspolicyn för att fortsätta.');
       }
@@ -58,7 +57,7 @@ export default {
 
         if (response.ok) {
           console.log('User registered successfully');
-          this.$router.push({ name: 'Welcome' });
+          this.$router.push({ name: 'LogIn' });
         } else {
           console.error('Error registering user');
         }

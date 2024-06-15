@@ -179,6 +179,7 @@ export default {
           password: this.userData.password
         };
         this.showEditModal = true;
+        this.showUserData = false;
       }).catch(error => {
         console.error("Error fetching user data for editing:", error);
         this.errorMessage = "Failed to load user details for editing.";

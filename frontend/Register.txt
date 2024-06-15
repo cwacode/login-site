@@ -1,4 +1,4 @@
-Kontaktuppgifter
+Kontaktuppgifter:
 Personuppgiftsansvarig: Loginsite AB
 Adress: Loginsite gatan 1
 Telefonnummer: 070 1234567
@@ -7,21 +7,28 @@ Företrädare: Log In
 Dataskyddsombud: Log In
 Dataskyddsombudets Kontaktuppgifter: Loginsite@mail.com 070 1234567
 
-Ändamålen med Behandlingen
+Ändamålen med Behandlingen:
 Ändamålen inkluderar användarhantering, kommunikation, säkerhet, tjänsteförbättringar och efterlevnad av lagkrav.
 
-Kategorier av Registrerade och Personuppgifter
+Kategorier av Registrerade och Personuppgifter:
 Kategorier av Registrerade: Användare
 Kategorier av Personuppgifter: Namn, efternamn, e-postadress, lösenord
 
-Kategorier av Mottagare
-Jon
+Kategorier av Mottagare:
+Mottagare av Personuppgifter: IT-support, molntjänstleverantörer, Jon
 
-Överföringar till Tredje Land
+Överföringar till Tredje Land:
 Överföringar sker endast till länder med adekvat skyddsnivå eller där lämpliga skyddsåtgärder har vidtagits, i enlighet med GDPR.
 
-Tidsfrister för Radering
+Tidsfrister för Radering:
 Användaruppgifter: Raderas 1 år efter senaste aktivitet
 
-Säkerhetsåtgärder
-Regelbundna säkerhetsgranskningar och riskbedömningar
+Säkerhetsåtgärder:
+Regelbundna säkerhetsgranskningar och riskbedömningar utförs för att skydda de behandlade personuppgifterna.
+
+Rättigheter för de Registrerade:
+Användare har rätt att begära tillgång till och rättelse eller radering av sina personuppgifter. De har även rätt att invända mot behandlingen och begära begränsning av behandlingen. För att utöva dessa rättigheter, kontakta personuppgiftsansvarig på ovan angivna kontaktuppgifter.
+
+Hantering av Dataintrång
+Vid eventuella dataintrång kommer berörda användare och tillsynsmyndigheter att omedelbart informeras i enlighet med GDPR
+krav.
