@@ -61,7 +61,7 @@ export default {
     },
     saveProject(project) {
       const method = project.id ? 'PUT' : 'POST';
-      const url = project.id ? `https://login-site-14vx.onrender.com/api/projects/${project.id}` : 'https://login-site-14vx.onrender.com/api/projects';
+      const url = project.id ? `https://login-site-14vx.onrender.com/api/project/${project.id}` : 'https://login-site-14vx.onrender.com/api/project';
       fetch(url, {
         method: method,
         headers: {
@@ -77,7 +77,7 @@ export default {
         .catch(error => console.error('Error:', error));
     },
     deleteProject(id) {
-      fetch(`https://login-site-14vx.onrender.com/api/projects/${id}`, {
+      fetch(`https://login-site-14vx.onrender.com/api/project/${id}`, {
         method: 'DELETE'
       })
         .then(response => response.json())
