@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import ProjectForm from '../components/ProjectForm.vue'; // Make sure to create this component
+import ProjectForm from '../components/ProjectForm.vue';
 
 export default {
   name: 'ProjectManager',
@@ -54,10 +54,10 @@ export default {
         .catch(error => console.error('Error:', error));
     },
     handleUpdateCurrentProject(project) {
-      this.currentProject = project; // Reset the current project
+      this.currentProject = project;
     },
     editProject(project) {
-      this.currentProject = { ...project }; // Make sure to create a fresh copy
+      this.currentProject = { ...project };
     },
     saveProject(project) {
       const method = project.id ? 'PUT' : 'POST';
@@ -122,7 +122,6 @@ td {
 .button-group {
   display: flex;
   justify-content: space-between;
-  /* Spacing between buttons */
 }
 
 .button {

@@ -59,7 +59,7 @@
         this.$emit('save', this.form);
       },
       cancel() {
-      this.form = { id: '', title: '', description: '', status: '' }; // Reset form
+      this.form = { id: '', title: '', description: '', status: '' };
       this.$emit('cancel');
       this.$emit('updateCurrentProject', {});
     },
@@ -73,8 +73,8 @@
     padding: 10px;
     border-radius: 8px;
     width: 90%;
-    max-width: 500px; /* Limit max width for better readability */
-    margin: auto; /* Center align the card */
+    max-width: 500px;
+    margin: auto;
   }
   
   .card-title {
@@ -99,7 +99,7 @@
   input[type="text"],
   textarea,
   select {
-    width: 80%; /* Full width to match form layout */
+    width: 80%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -107,11 +107,11 @@
   
   .button-group {
     display: flex;
-    justify-content: space-between; /* Spacing between buttons */
+    justify-content: space-between;/
   }
   .button {
-    flex: 1; /* Each button takes equal space */
-    margin: 0 5px; /* Space between buttons */
+    flex: 1;
+    margin: 0 5px;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;

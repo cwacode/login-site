@@ -8,7 +8,6 @@ const allowedOrigins = ['http://localhost:5173', 'https://login-site-14vx.onrend
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps, curl requests)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
       var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
@@ -126,7 +125,6 @@ app.get('/api/profile/:email', async (req, res) => {
   }
 });
 
-// Get all projects
 app.get('/api/projects', async (req, res) => {
   try {
       const { rows } = await client.query('SELECT * FROM projects');
@@ -137,7 +135,6 @@ app.get('/api/projects', async (req, res) => {
   }
 });
 
-// Add a new project
 app.post('/api/projects', async (req, res) => {
   const { title, description, status } = req.body;
   try {
@@ -153,7 +150,6 @@ app.post('/api/projects', async (req, res) => {
   }
 });
 
-// Update a project
 app.put('/api/projects/:id', async (req, res) => {
   const { id } = req.params;
   const { title, description, status } = req.body;
@@ -174,7 +170,6 @@ app.put('/api/projects/:id', async (req, res) => {
   }
 });
 
-// Delete a project
 app.delete('/api/projects/:id', async (req, res) => {
   const { id } = req.params;
   try {
