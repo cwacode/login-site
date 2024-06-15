@@ -3,5 +3,4 @@ public
 dist
 .env
 .dist
-database.js
 .gitignore
