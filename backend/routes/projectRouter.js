@@ -6,10 +6,14 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     const userId = req.query.userId;
     try {
-      const query = userId
-        ? 'SELECT * FROM projects WHERE users_id = $1'
-        : 'SELECT * FROM projects';
-      const values = userId ? [userId] : [];
+      let query, values;
+      if (userId) {
+        query = 'SELECT * FROM projects WHERE users_id = $1';
+        values = [userId];
+      } else {
+        query = 'SELECT * FROM projects';
+        values = [];
+      }
       const { rows } = await client.query(query, values);
       res.json(rows);
     } catch (error) {
