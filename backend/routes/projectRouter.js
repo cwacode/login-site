@@ -28,13 +28,13 @@ router.get('/', async (req, res) => {
     }
   });
   
-  router.put('/:id', async (req, res) => {
-    const { id } = req.params;
+  router.put('/:projects_id', async (req, res) => {
+    const { projects_id } = req.params;
     const { title, description, status } = req.body;
     try {
         const result = await client.query(
-            'UPDATE projects SET title = $1, description = $2, status = $3 WHERE id = $4 RETURNING *',
-            [title, description, status, id]
+            'UPDATE projects SET title = $1, description = $2, status = $3 WHERE projects_id = $4 RETURNING *',
+            [title, description, status, projects_id]
         );
         if (result.rows.length) {
             res.json(result.rows[0]);
@@ -48,12 +48,12 @@ router.get('/', async (req, res) => {
     }
   });
   
-  router.delete('/:id', async (req, res) => {
-    const { id } = req.params;
+  router.delete('/:projects_id', async (req, res) => {
+    const { projects_id } = req.params;
     try {
         const result = await client.query(
-            'DELETE FROM projects WHERE id = $1 RETURNING *',
-            [id]
+            'DELETE FROM projects WHERE projects_id = $1 RETURNING *',
+            [projects_id]
         );
         if (result.rows.length) {
             res.json({ message: 'Project deleted successfully' });

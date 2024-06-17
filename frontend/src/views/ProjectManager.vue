@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="project in projects" :key="project.id">
+          <tr v-for="project in projects" :key="project.projects_id">
             <td>{{ project.title }}</td>
             <td>{{ project.description }}</td>
             <td>{{ project.status }}</td>
@@ -21,7 +21,7 @@
                 <button class="button green">Events</button>
               </router-link>              
               <button @click="editProject(project)" class="button blue">Edit</button>
-              <button @click="deleteProject(project.id)" class="button red">Delete</button>
+              <button @click="deleteProject(project.projects_id)" class="button red">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -63,8 +63,8 @@ export default {
       this.currentProject = { ...project };
     },
     saveProject(project) {
-      const method = project.id ? 'PUT' : 'POST';
-      const url = project.id ? `https://login-site-14vx.onrender.com/api/project/${project.id}` : 'https://login-site-14vx.onrender.com/api/project';
+      const method = project.projects_id ? 'PUT' : 'POST';
+      const url = project.projects_id ? `https://login-site-14vx.onrender.com/api/project/${project.projects_id}` : 'https://login-site-14vx.onrender.com/api/project';
       fetch(url, {
         method: method,
         headers: {
@@ -79,13 +79,13 @@ export default {
         })
         .catch(error => console.error('Error:', error));
     },
-    deleteProject(id) {
-      fetch(`https://login-site-14vx.onrender.com/api/project/${id}`, {
+    deleteProject(projects_id) {
+      fetch(`https://login-site-14vx.onrender.com/api/project/${projects_id}`, {
         method: 'DELETE'
       })
         .then(response => response.json())
         .then(() => {
-          this.projects = this.projects.filter(p => p.id !== id);
+          this.projects = this.projects.filter(p => p.projects_id !== projects_id);
         })
         .catch(error => console.error('Error:', error));
     }
