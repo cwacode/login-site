@@ -2,16 +2,16 @@
     <div class="project-events">
       <h1>Project Events</h1>
       <ul>
-        <li v-for="event in events" :key="event.id">
+        <li v-for="event in events" :key="event.id" class="list">
           <h3>{{ event.title }}</h3>
           <p>{{ event.description }}</p>
           <div>
-            <button @click="editEvent(event)">Edit</button>
-            <button @click="deleteEvent(event.id)">Delete</button>
+            <button @click="editEvent(event)" class="button blue">Edit</button>
+            <button @click="deleteEvent(event.id)" class="button red">Delete</button>
           </div>
         </li>
       </ul>
-      <button @click="showModal(null)">Add New Event</button>
+      <button @click="showModal(null)" class="button blue">Add New Event</button>
       <div v-if="showForm" class="modal">
         <event-form :current-event="currentEvent" @save-event="handleSaveEvent" @cancel="showForm = false"></event-form>
       </div>
@@ -53,6 +53,10 @@
       .then(() => { this.events = this.events.filter(e => e.id !== id); })
       .catch(error => console.error('Error:', error));
     },
+    editEvent(event) {
+      this.currentEvent = Object.assign({}, event);
+      this.showModal(this.currentEvent);
+    },
     showModal(event) {
       this.currentEvent = event || { id: '', title: '', description: '', project_id: this.projectId };
       this.showForm = true;
@@ -69,6 +73,13 @@
 </script>
   
   <style>
+  .list {
+  border: 2px solid #007bff;
+  padding: 10px;
+  margin-right: 30px;
+  border-radius: 8px;
+  list-style-type: none;
+}
   .project-events {
     max-width: 600px;
     margin: auto;
@@ -83,6 +94,69 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    background-color: #242424;
+  }
+  
+  .card-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  textarea,
+  input[type="number"] {
+    width: 90%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+  }
+  
+  .blue {
+    background-color: #007bff;
+  }
+  
+  .red {
+    background-color: #ff4b4b;
   }
   </style>
   

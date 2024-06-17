@@ -11,10 +11,6 @@
           <label for="description">Event Description</label>
           <textarea id="description" v-model="form.description" required></textarea>
         </div>
-        <div class="form-group">
-          <label for="projects_id">Project ID</label>
-          <input type="number" id="projects_id" v-model="form.projects_id" required>
-        </div>
         <div class="button-group">
           <button type="submit" class="button blue">Save</button>
           <button type="button" @click="cancel" class="button red">Cancel</button>
@@ -39,7 +35,6 @@
           id: this.currentEvent.id || '',
           title: this.currentEvent.title || '',
           description: this.currentEvent.description || '',
-          projects_id: this.currentEvent.projects_id || null,
         }
       };
     },
@@ -68,13 +63,13 @@
         .then(response => response.json())
         .then(() => {
           this.$emit('save-event', this.form);
-          this.form = { id: '', title: '', description: '', projects_id: null };
+          this.form = { id: '', title: '', description: '' };
         })
         .catch(error => console.error('Error:', error));
       },
       cancel() {
         this.$emit('cancel');
-        this.form = { id: '', title: '', description: '', projects_id: null };
+        this.form = { id: '', title: '', description: '' };
       }
     },
   };
@@ -89,6 +84,7 @@
     max-width: 500px;
     margin: auto;
     background-color: #242424;
+    list-style-type: none;
   }
   
   .card-title {

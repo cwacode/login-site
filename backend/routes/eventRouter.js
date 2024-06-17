@@ -32,7 +32,7 @@ router.put('/:id', async (req, res) => {
     const { title, description } = req.body;
     try {
         const result = await client.query(
-            'UPDATE events SET title = $1, description = $2, WHERE id = $3 RETURNING *',
+            'UPDATE events SET title = $1, description = $2 WHERE id = $3 RETURNING *',
             [title, description, id]
         );
         if (result.rows.length) {
