@@ -59,6 +59,7 @@ export default {
 
         if (response.ok) {
             localStorage.setItem('cachedEmail', this.username);
+            localStorage.setItem('userID', data.user_id);
             this.$router.push({ name: 'Welcome' }); 
           } else {
             localStorage.removeItem('cachedEmail'); 

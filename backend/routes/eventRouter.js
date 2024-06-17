@@ -4,8 +4,13 @@ import client from '../database.js';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+    const projectId = req.query.projectId;
     try {
-        const { rows } = await client.query('SELECT * FROM events');
+        const query = projectId
+            ? 'SELECT * FROM events WHERE projects_id = $1'
+            : 'SELECT * FROM events';
+        const values = projectId ? [projectId] : [];
+        const { rows } = await client.query(query, values);
         res.json(rows);
     } catch (error) {
         console.error('Error:', error);

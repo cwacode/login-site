@@ -13,14 +13,24 @@
       </ul>
       <button @click="showModal(null)">Add New Event</button>
       <div v-if="showForm" class="modal">
+        <event-form :current-event="currentEvent" @save-event="handleSaveEvent" @cancel="showForm = false"></event-form>
       </div>
     </div>
   </template>
   
   <script>
+  import EventForm from '../components/EventForm.vue';
   
   export default {
-
+    props: {
+    projectId: {
+      type: Number,
+      required: true
+    }
+  },
+    components: {
+      EventForm
+    },
     data() {
       return {
         events: [],
@@ -30,7 +40,7 @@
     },
     methods: {
       fetchEvents() {
-        fetch('https://login-site-14vx.onrender.com/api/events')
+        fetch(`https://login-site-14vx.onrender.com/api/events?projectId=${this.projectId}`)
           .then(response => response.json())
           .then(data => {
             this.events = data;

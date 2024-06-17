@@ -17,9 +17,10 @@
             <td>{{ project.description }}</td>
             <td>{{ project.status }}</td>
             <td class="button-group">
-              <router-link to="/events" tag="button">
+              <!-- <router-link to="/events" tag="button">
                 <button class="button green">Events</button>
-              </router-link>              
+              </router-link> -->
+              <button @click="showEvents(project.projects_id)" class="button green">Edit</button>              
               <button @click="editProject(project)" class="button blue">Edit</button>
               <button @click="deleteProject(project.projects_id)" class="button red">Delete</button>
             </td>
@@ -45,11 +46,13 @@ export default {
     return {
       projects: [],
       currentProject: {},
+      userId: null,
     };
   },
   methods: {
     fetchProjects() {
-      fetch('https://login-site-14vx.onrender.com/api/project')
+      const userId = localStorage.getItem('userId');
+      fetch(`https://login-site-14vx.onrender.com/api/project?userId=${userId}`)
         .then(response => response.json())
         .then(data => {
           this.projects = data;
@@ -63,6 +66,8 @@ export default {
       this.currentProject = { ...project };
     },
     saveProject(project) {
+      const userId = localStorage.getItem('userId');
+      project.users_id = userId;
       const method = project.projects_id ? 'PUT' : 'POST';
       const url = project.projects_id ? `https://login-site-14vx.onrender.com/api/project/${project.projects_id}` : 'https://login-site-14vx.onrender.com/api/project';
       fetch(url, {
@@ -90,7 +95,11 @@ export default {
         .catch(error => console.error('Error:', error));
     }
   },
+  showEvents(project) {
+      this.$router.push({ name: 'ProjectEvents', params: { projectId: project.projects_id } });
+    },
   mounted() {
+    this.userId = localStorage.getItem('userId');
     this.fetchProjects();
   }
 };

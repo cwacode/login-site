@@ -4,8 +4,9 @@ import client from '../database.js'
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+    const userId = req.query.userId;
     try {
-        const { rows } = await client.query('SELECT * FROM projects');
+        const { rows } = await client.query('SELECT * FROM projects WHERE users_id = $1', [userId]);
         res.json(rows);
     } catch (error) {
         console.error('Error:', error);
@@ -17,8 +18,8 @@ router.get('/', async (req, res) => {
     const { title, description, status } = req.body;
     try {
         const result = await client.query(
-            'INSERT INTO projects (title, description, status) VALUES ($1, $2, $3) RETURNING *',
-            [title, description, status]
+            'INSERT INTO projects (title, description, status, users_id) VALUES ($1, $2, $3, $4) RETURNING *',
+            [title, description, status, users_id]
         );
         res.status(201).json(result.rows[0]);
         console.log(result.rows[0])
@@ -33,8 +34,8 @@ router.get('/', async (req, res) => {
     const { title, description, status } = req.body;
     try {
         const result = await client.query(
-            'UPDATE projects SET title = $1, description = $2, status = $3 WHERE projects_id = $4 RETURNING *',
-            [title, description, status, projects_id]
+            'UPDATE projects SET title = $1, description = $2, status = $3, users_id = $4 WHERE projects_id = $5 RETURNING *',
+            [title, description, status, users_id, projects_id]
         );
         if (result.rows.length) {
             res.json(result.rows[0]);
