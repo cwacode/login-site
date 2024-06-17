@@ -26,7 +26,7 @@ app.use(express.static('dist'));
 
 app.use('/api/user', userRouter);
 app.use('/api/project', projectRouter);
-app.use('api/events', eventRouter);
+app.use('/api/events', eventRouter);
 
 app.listen(3000, () => {
   console.log('Server running at http://localhost:3000/');
