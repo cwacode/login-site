@@ -60,7 +60,7 @@ export default {
         if (response.ok) {
             const data = await response.json();
             localStorage.setItem('cachedEmail', this.username);
-            localStorage.setItem('userID', data.user_id);
+            localStorage.setItem('userId', data.user_id);
             this.$router.push({ name: 'Welcome' }); 
           } else {
             localStorage.removeItem('cachedEmail'); 
