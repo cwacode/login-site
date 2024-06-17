@@ -5,7 +5,7 @@
       <img src="/welcome.png" alt="Logga in" class="welcome-image" loading="lazy" />
     </div>
       <router-link to="/profile" tag="button" class="button blue">Min profil</router-link>
-      <router-link to="/project-manager" tag="button" class="button blue">Projekt Hantering</router-link>
+      <router-link to="/project-manager" tag="button" class="button blue">Projekthantering</router-link>
       <router-link to="/" tag="button" class="button red">Logga ut</router-link>
   </div>
 </template>

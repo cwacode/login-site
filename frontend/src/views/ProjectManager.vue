@@ -17,6 +17,9 @@
             <td>{{ project.description }}</td>
             <td>{{ project.status }}</td>
             <td class="button-group">
+              <router-link to="/events" tag="button">
+                <button class="button green">Events</button>
+              </router-link>              
               <button @click="editProject(project)" class="button blue">Edit</button>
               <button @click="deleteProject(project.id)" class="button red">Delete</button>
             </td>
@@ -141,6 +144,11 @@ td {
 
 .red {
   background-color: #ff4b4b;
+  color: white;
+}
+
+.green {
+  background-color: green;
   color: white;
 }
 

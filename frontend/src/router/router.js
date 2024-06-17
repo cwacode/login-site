@@ -32,7 +32,12 @@ const router = createRouter({
       path: '/project-manager',
       name: 'ProjectManager',
       component: () => import('../views/ProjectManager.vue')
-    },    
+    },
+    {
+      path: '/events',
+      name: 'projectEvents',
+      component: () => import('../views/ProjectEvents.vue')
+    },       
   ],
 });
 
