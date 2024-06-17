@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import userRouter from './routes/userRouter.js';
 import projectRouter from './routes/projectRouter.js';
+import eventRouter from './routes/eventRouter.js';
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static('dist'));
 
 app.use('/api/user', userRouter);
 app.use('/api/project', projectRouter);
+app.use('api/events', eventRouter);
 
 app.listen(3000, () => {
   console.log('Server running at http://localhost:3000/');

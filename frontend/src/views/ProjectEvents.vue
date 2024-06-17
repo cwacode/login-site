@@ -5,7 +5,9 @@
         <li v-for="event in events" :key="event.id">
           <h3>{{ event.title }}</h3>
           <p>{{ event.description }}</p>
-          <p>Project ID: {{ event.project_id }}</p>
+          <div>
+            <button @click="deleteEvent(event.id)">Delete</button>
+          </div>
         </li>
       </ul>
       <button @click="addEvent">Add New Event</button>
@@ -28,6 +30,18 @@
           })
           .catch(error => console.error('Error:', error));
       },
+      deleteEvent(id) {
+        fetch(`https://login-site-14vx.onrender.com/api/events/${id}`, {
+          method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(() => {
+          this.events = this.events.filter(e => e.id !== id);
+          this.fetchEvents();
+        })
+        .catch(error => console.error('Error:', error));
+      },
+      
     },
     mounted() {
       this.fetchEvents();
