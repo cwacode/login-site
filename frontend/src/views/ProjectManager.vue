@@ -64,7 +64,7 @@ export default {
     },
     saveProject(project) {
       const method = project.projects_id ? 'PUT' : 'POST';
-      const url = project.projects_id ? `https://login-site-14vx.onrender.com/api/project/${project.id}` : 'https://login-site-14vx.onrender.com/api/project';
+      const url = project.projects_id ? `https://login-site-14vx.onrender.com/api/project/${project.projects_id}` : 'https://login-site-14vx.onrender.com/api/project';
       fetch(url, {
         method: method,
         headers: {
