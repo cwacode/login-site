@@ -13,18 +13,14 @@
       </ul>
       <button @click="showModal(null)">Add New Event</button>
       <div v-if="showForm" class="modal">
-        <event-form :current-event="currentEvent" @save-event="handleSaveEvent" @cancel="showForm = false"></event-form>
       </div>
     </div>
   </template>
   
   <script>
-  import EventForm from '../components/EventForm.vue';
   
   export default {
-    components: {
-      EventForm
-    },
+
     data() {
       return {
         events: [],
