@@ -22,12 +22,6 @@
   import EventForm from '../components/EventForm.vue';
   
   export default {
-    props: {
-    projectId: {
-      type: Number,
-      required: true
-    }
-  },
     components: {
       EventForm
     },

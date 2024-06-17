@@ -49,33 +49,29 @@ export default {
   },
   methods: {
     fetchProjects() {
-      fetch('https://login-site-14vx.onrender.com/api/project')
-        .then(response => response.json())
-        .then(data => {
-          this.projects = data;
-        })
-        .catch(error => console.error('Error:', error));
-    },
-    handleUpdateCurrentProject(project) {
-      this.currentProject = project;
-    },
-    editProject(project) {
-      this.currentProject = { ...project };
+        const email = localStorage.getItem('cachedEmail');
+        fetch(`https://login-site-14vx.onrender.com/api/project?email=${email}`)
+            .then(response => response.json())
+            .then(data => {
+                this.projects = data;
+            })
+            .catch(error => console.error('Error:', error));
     },
     saveProject(project) {
-      const method = project.projects_id ? 'PUT' : 'POST';
-      const url = project.projects_id ? `https://login-site-14vx.onrender.com/api/project/${project.projects_id}` : 'https://login-site-14vx.onrender.com/api/project';
-      fetch(url, {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(project)
-      })
+        const email = localStorage.getItem('cachedEmail');
+        const method = project.projects_id ? 'PUT' : 'POST';
+        const url = project.projects_id ? `https://login-site-14vx.onrender.com/api/project/${project.projects_id}` : 'https://login-site-14vx.onrender.com/api/project';
+        fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({...project, email})
+        })
         .then(response => response.json())
         .then(() => {
-          this.fetchProjects();
-          this.currentProject = {};
+            this.fetchProjects();
+            this.currentProject = {};
         })
         .catch(error => console.error('Error:', error));
     },
@@ -90,6 +86,12 @@ export default {
         .catch(error => console.error('Error:', error));
     }
   },
+  handleUpdateCurrentProject(project) {
+      this.currentProject = project;
+    },
+    editProject(project) {
+      this.currentProject = { ...project };
+    },
   mounted() {
     this.fetchProjects();
   }

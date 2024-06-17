@@ -4,49 +4,44 @@ import client from '../database.js'
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+    const email = req.query.email;
     try {
-        const { rows } = await client.query('SELECT * FROM projects');
+        const { rows } = await client.query('SELECT * FROM projects WHERE user_email = $1', [email]);
         res.json(rows);
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ message: 'Server error' });
     }
-  });
-  
-  router.post('/', async (req, res) => {
-    const { title, description, status } = req.body;
+});
+
+router.post('/', async (req, res) => {
+    const { title, description, status, email } = req.body;
     try {
         const result = await client.query(
-            'INSERT INTO projects (title, description, status) VALUES ($1, $2, $3) RETURNING *',
-            [title, description, status]
+            'INSERT INTO projects (title, description, status, user_email) VALUES ($1, $2, $3, $4) RETURNING *',
+            [title, description, status, email]
         );
         res.status(201).json(result.rows[0]);
-        console.log(result.rows[0])
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ message: 'Server error' });
     }
-  });
-  
-  router.put('/:projects_id', async (req, res) => {
+});
+
+router.put('/:projects_id', async (req, res) => {
     const { projects_id } = req.params;
-    const { title, description, status } = req.body;
+    const { title, description, status, email } = req.body;
     try {
         const result = await client.query(
-            'UPDATE projects SET title = $1, description = $2, status = $3 WHERE projects_id = $4 RETURNING *',
-            [title, description, status, projects_id]
+            'UPDATE projects SET title = $1, description = $2, status = $3, user_email = $4 WHERE projects_id = $5 AND user_email = $4 RETURNING *',
+            [title, description, status, email, projects_id]
         );
-        if (result.rows.length) {
-            res.json(result.rows[0]);
-            console.log(result.rows[0])
-        } else {
-            res.status(404).json({ message: 'Project not found' });
-        }
+        res.json(result.rows[0]);
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ message: 'Server error' });
     }
-  });
+});
   
   router.delete('/:projects_id', async (req, res) => {
     const { projects_id } = req.params;

@@ -59,9 +59,7 @@ export default {
 
         if (response.ok) {
             const data = await response.json();
-            console.log('Received user_id:', data.user_id);
             localStorage.setItem('cachedEmail', this.username);
-            localStorage.setItem('userId', data.user_id);
             this.$router.push({ name: 'Welcome' }); 
           } else {
             localStorage.removeItem('cachedEmail'); 
