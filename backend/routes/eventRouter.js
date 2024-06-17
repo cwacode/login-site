@@ -3,7 +3,7 @@ import client from '../database.js';
 
 const router = express.Router();
 
-router.get('/events', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const { rows } = await client.query('SELECT * FROM events');
         res.json(rows);
@@ -13,7 +13,7 @@ router.get('/events', async (req, res) => {
     }
 });
 
-router.post('/events', async (req, res) => {
+router.post('/', async (req, res) => {
     const { title, description, project_id } = req.body;
     try {
         const result = await client.query(
@@ -27,7 +27,7 @@ router.post('/events', async (req, res) => {
     }
 });
 
-router.put('/events/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { title, description, project_id } = req.body;
     try {
@@ -46,7 +46,7 @@ router.put('/events/:id', async (req, res) => {
     }
 });
 
-router.delete('/events/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const result = await client.query(
