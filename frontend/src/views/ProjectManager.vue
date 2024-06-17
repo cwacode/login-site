@@ -17,9 +17,9 @@
             <td>{{ project.description }}</td>
             <td>{{ project.status }}</td>
             <td class="button-group">
-              <router-link to="/events" tag="button">
+              <router-link :to="{ name: 'Events', params: { projectId: project.projects_id } }" tag="button">
                 <button class="button green">Events</button>
-              </router-link>              
+              </router-link>             
               <button @click="editProject(project)" class="button blue">Edit</button>
               <button @click="deleteProject(project.projects_id)" class="button red">Delete</button>
             </td>
@@ -56,7 +56,12 @@ export default {
         })
         .catch(error => console.error('Error:', error));
     },
-
+    handleUpdateCurrentProject(project) {
+      this.currentProject = project;
+    },
+    editProject(project) {
+      this.currentProject = { ...project };
+    },
     saveProject(project) {
       const method = project.projects_id ? 'PUT' : 'POST';
       const url = project.projects_id ? `https://login-site-14vx.onrender.com/api/project/${project.projects_id}` : 'https://login-site-14vx.onrender.com/api/project';
@@ -85,12 +90,6 @@ export default {
         .catch(error => console.error('Error:', error));
     }
   },
-  handleUpdateCurrentProject(project) {
-      this.currentProject = project;
-    },
-    editProject(project) {
-      this.currentProject = { ...project };
-    },
   mounted() {
     this.fetchProjects();
   }

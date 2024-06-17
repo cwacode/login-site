@@ -34,10 +34,11 @@ const router = createRouter({
       component: () => import('../views/ProjectManager.vue')
     },
     {
-      path: '/events',
+      path: '/events/:projectId',
       name: 'projectEvents',
-      component: () => import('../views/ProjectEvents.vue')
-    },       
+      props: true,
+      component: () => import('../views/ProjectEvents.vue'),
+    },      
   ],
 });
 

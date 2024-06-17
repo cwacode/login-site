@@ -22,9 +22,15 @@
   import EventForm from '../components/EventForm.vue';
   
   export default {
-    components: {
-      EventForm
-    },
+    components: { EventForm },
+    props: ['projectId'],
+    data() {
+      return {
+        events: [],
+        showForm: false,
+        currentEvent: {}
+      };
+  },
     data() {
       return {
         events: [],
@@ -33,38 +39,34 @@
       };
     },
     methods: {
-      fetchEvents() {
-        fetch(`https://login-site-14vx.onrender.com/api/events?projectId=${this.projectId}`)
-          .then(response => response.json())
-          .then(data => {
-            this.events = data;
-          })
-          .catch(error => console.error('Error:', error));
-      },
-      deleteEvent(id) {
-        fetch(`https://login-site-14vx.onrender.com/api/events/${id}`, {
-          method: 'DELETE'
-        })
+    fetchEvents() {
+      fetch(`https://login-site-14vx.onrender.com/api/events?projectId=${this.projectId}`)
         .then(response => response.json())
-        .then(() => {
-          this.events = this.events.filter(e => e.id !== id);
-        })
+        .then(data => { this.events = data; })
         .catch(error => console.error('Error:', error));
-      },
-      showModal(event) {
-        this.currentEvent = event ? { ...event } : { id: '', title: '', description: '', project_id: null };
-        this.showForm = true;
-      },
-      handleSaveEvent(event) {
-        this.fetchEvents();
-        this.showForm = false;
-      }
     },
-    mounted() {
+    deleteEvent(id) {
+      fetch(`https://login-site-14vx.onrender.com/api/events/${id}`, {
+        method: 'DELETE'
+      })
+      .then(response => response.json())
+      .then(() => { this.events = this.events.filter(e => e.id !== id); })
+      .catch(error => console.error('Error:', error));
+    },
+    showModal(event) {
+      this.currentEvent = event || { id: '', title: '', description: '', project_id: this.projectId };
+      this.showForm = true;
+    },
+    handleSaveEvent(event) {
       this.fetchEvents();
+      this.showForm = false;
     }
-  };
-  </script>
+  },
+  mounted() {
+    this.fetchEvents();
+  }
+};
+</script>
   
   <style>
   .project-events {
