@@ -20,7 +20,7 @@
               <!-- <router-link to="/events" tag="button">
                 <button class="button green">Events</button>
               </router-link> -->
-              <button @click="showEvents(project.projects_id)" class="button green">Edit</button>              
+              <button @click="showEvents()" class="button green">Events</button>              
               <button @click="editProject(project)" class="button blue">Edit</button>
               <button @click="deleteProject(project.projects_id)" class="button red">Delete</button>
             </td>
