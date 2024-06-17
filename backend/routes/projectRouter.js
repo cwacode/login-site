@@ -25,17 +25,19 @@ router.get('/', async (req, res) => {
   router.post('/', async (req, res) => {
     const { title, description, status, users_id } = req.body;
     try {
+        if (!users_id) {
+            throw new Error('No user ID provided');
+        }
         const result = await client.query(
             'INSERT INTO projects (title, description, status, users_id) VALUES ($1, $2, $3, $4) RETURNING *',
             [title, description, status, users_id]
         );
         res.status(201).json(result.rows[0]);
-        console.log(result.rows[0])
     } catch (error) {
         console.error('Error:', error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
-  });
+});
   
   router.put('/:projects_id', async (req, res) => {
     const { projects_id } = req.params;

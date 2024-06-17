@@ -66,24 +66,32 @@ export default {
       this.currentProject = { ...project };
     },
     saveProject(project) {
-      const userId = localStorage.getItem('userId');
-      project.users_id = userId;
-      const method = project.projects_id ? 'PUT' : 'POST';
-      const url = project.projects_id ? `https://login-site-14vx.onrender.com/api/project/${project.projects_id}` : 'https://login-site-14vx.onrender.com/api/project';
-      fetch(url, {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(project)
-      })
-        .then(response => response.json())
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            console.error('No userId available in localStorage');
+            return;  // Prevent further execution
+        }
+        project.users_id = userId;
+        const method = project.projects_id ? 'PUT' : 'POST';
+        const url = project.projects_id ? `https://login-site-14vx.onrender.com/api/project/${project.projects_id}` : 'https://login-site-14vx.onrender.com/api/project';
+        fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(project)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(() => {
-          this.fetchProjects();
-          this.currentProject = {};
+            this.fetchProjects();
+            this.currentProject = {};
         })
         .catch(error => console.error('Error:', error));
     },
+
     deleteProject(projects_id) {
       fetch(`https://login-site-14vx.onrender.com/api/project/${projects_id}`, {
         method: 'DELETE'
