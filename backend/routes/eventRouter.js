@@ -14,11 +14,11 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { title, description, projects_id } = req.body;
+    const { title, description } = req.body;
     try {
         const result = await client.query(
-            'INSERT INTO events (title, description, projects_id) VALUES ($1, $2, $3) RETURNING *',
-            [title, description, projects_id]
+            'INSERT INTO events (title, description) VALUES ($1, $2) RETURNING *',
+            [title, description]
         );
         res.status(201).json(result.rows[0]);
     } catch (error) {
@@ -29,11 +29,11 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { title, description, projects_id } = req.body;
+    const { title, description } = req.body;
     try {
         const result = await client.query(
-            'UPDATE events SET title = $1, description = $2, projects_id = $3 WHERE id = $4 RETURNING *',
-            [title, description, projects_id, id]
+            'UPDATE events SET title = $1, description = $2, WHERE id = $3 RETURNING *',
+            [title, description, id]
         );
         if (result.rows.length) {
             res.json(result.rows[0]);

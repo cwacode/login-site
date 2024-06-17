@@ -17,7 +17,7 @@
             <td>{{ project.description }}</td>
             <td>{{ project.status }}</td>
             <td class="button-group">
-              <router-link :to="{ name: 'Events', params: { projectId: project.projects_id } }" tag="button">
+              <router-link :to="{ name: 'ProjectEvents', params: { projectId: project.projects_id } }" tag="button">
                 <button class="button green">Events</button>
               </router-link>             
               <button @click="editProject(project)" class="button blue">Edit</button>
