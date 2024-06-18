@@ -84,7 +84,7 @@
     max-width: 500px;
     margin: auto;
     background-color: #242424;
-    list-style-type: none;
+    
   }
   
   .card-title {

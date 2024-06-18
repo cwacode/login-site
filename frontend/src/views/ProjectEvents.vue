@@ -5,7 +5,7 @@
         <li v-for="event in events" :key="event.id" class="list">
           <h3>{{ event.title }}</h3>
           <p>{{ event.description }}</p>
-          <div>
+          <div class="button-group">
             <button @click="editEvent(event)" class="button blue">Edit</button>
             <button @click="deleteEvent(event.id)" class="button red">Delete</button>
           </div>
@@ -73,16 +73,25 @@
 </script>
   
   <style>
+ul {
+  width: 100%;
+  margin-right: 30px;
+}
+
   .list {
   border: 2px solid #007bff;
   padding: 10px;
-  margin-right: 30px;
+  margin: 10px;
   border-radius: 8px;
   list-style-type: none;
+  max-width: 90%;
 }
   .project-events {
     max-width: 600px;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .modal {
